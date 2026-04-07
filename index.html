@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PadalaPH — Hanapin ang Pinakamura at Pinakamabilis na Padala</title>
+<meta name="description" content="I-compare ang Western Union, Wise, Remitly, GCash at iba pa. Libre, real-time, para sa bawat OFW at pamilyang Pilipino." />
+<meta property="og:title" content="PadalaPH — Pinakamura at Pinakamabilis na Padala" />
+<meta property="og:description" content="I-compare ang lahat ng remittance services sa isang click. Para sa OFW. Gawa ng Pilipino." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:    #1A56DB;
+    --blue-lt: #EBF3FF;
+    --blue-dk: #0F3BAA;
+    --gold:    #F5A623;
+    --gold-lt: #FEF3DC;
+    --ink:     #0D0D0D;
+    --ink-2:   #444;
+    --ink-3:   #888;
+    --line:    #E5E5E5;
+    --surface: #F7F8FA;
+    --white:   #FFFFFF;
+    --radius:  12px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--blue); }
+
+  .nav-tag {
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--gold-lt);
+    color: #7A4E00;
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.3px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--blue-lt);
+    color: var(--blue-dk);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-pill::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(34px, 6vw, 54px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 480px;
+    margin: 0 auto 1rem;
+    line-height: 1.7;
+  }
+
+  .hero-note {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-bottom: 2.5rem;
+  }
+
+  /* TOOL */
+  .tool-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 1rem 4rem;
+  }
+
+  .tool-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    .tool-grid { grid-template-columns: 1fr; }
+  }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .field select,
+  .field input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+
+  .field select:focus,
+  .field input:focus { border-color: var(--blue); }
+
+  .field-full { margin-bottom: 1rem; }
+
+  .compare-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.2px;
+  }
+
+  .compare-btn:hover { background: var(--blue-dk); }
+  .compare-btn:active { transform: scale(0.99); }
+
+  /* RESULTS */
+  .results {
+    margin-top: 1.25rem;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .results-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .result-item {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: border-color 0.15s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .result-item:hover { border-color: #aaa; }
+
+  .result-item.best {
+    border: 2px solid var(--blue);
+    background: var(--blue-lt);
+  }
+
+  .result-left { flex: 1; }
+
+  .best-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--blue);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-bottom: 5px;
+    letter-spacing: 0.3px;
+  }
+
+  .result-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .result-meta {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .result-right { text-align: right; flex-shrink: 0; }
+
+  .result-amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--ink);
+    display: block;
+    line-height: 1.2;
+  }
+
+  .result-fee { font-size: 12px; color: var(--ink-3); }
+
+  .result-cta {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    margin-top: 2px;
+    display: block;
+  }
+
+  .savings-banner {
+    background: var(--gold-lt);
+    border: 1px solid #F5D99A;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #7A4E00;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* CORRIDORS */
+  .section {
+    padding: 4rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .section-sub {
+    font-size: 15px;
+    color: var(--ink-2);
+    margin-bottom: 2rem;
+  }
+
+  .corridors {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+  }
+
+  .corridor-btn {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .corridor-btn:hover {
+    background: var(--blue-lt);
+    border-color: var(--blue);
+  }
+
+  .corridor-route {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .corridor-curr {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  /* WHY */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .why-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .why-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--blue-lt);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 18px;
+  }
+
+  .why-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .why-card p {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--line);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-3);
+    border-top: 1px solid var(--line);
+    line-height: 2;
+  }
+
+  footer strong { color: var(--ink-2); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="/">Padala<span>PH</span></a>
+  <span class="nav-tag">Libre · Real-time</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pill">Real-time na rates ngayon</div>
+  <h1>Hanapin ang <em>pinakamura</em><br>at pinakamabilis na padala</h1>
+  <p>I-compare ang Western Union, Wise, Remitly, GCash at iba pa — sa isang click lang.</p>
+  <p class="hero-note">Libre gamitin. Walang registration. Para sa bawat pamilyang Pilipino.</p>
+</section>
+
+<!-- TOOL -->
+<div class="tool-wrap">
+  <div class="tool-card">
+    <div class="tool-grid">
+      <div class="field">
+        <label>Nagpapadala mula sa</label>
+        <select id="from-country">
+          <option value="SA">🇸🇦 Saudi Arabia</option>
+          <option value="AE">🇦🇪 UAE / Dubai</option>
+          <option value="US">🇺🇸 United States</option>
+          <option value="HK">🇭🇰 Hong Kong</option>
+          <option value="SG">🇸🇬 Singapore</option>
+          <option value="QA">🇶🇦 Qatar</option>
+          <option value="GB">🇬🇧 United Kingdom</option>
+          <option value="CA">🇨🇦 Canada</option>
+          <option value="AU">🇦🇺 Australia</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Halaga (PHP)</label>
+        <input type="number" id="amount" value="10000" min="500" step="500" />
+      </div>
+    </div>
+    <div class="field field-full">
+      <label>Paraan ng pagtanggap</label>
+      <select id="receive-method">
+        <option value="gcash">GCash wallet</option>
+        <option value="bank">Bank deposit (BDO, BPI, Metrobank...)</option>
+        <option value="cash">Cash pickup (Cebuana, MLhuillier, Palawan...)</option>
+        <option value="maya">Maya wallet</option>
+      </select>
+    </div>
+    <button class="compare-btn" onclick="compare()">I-compare ngayon →</button>
+
+    <div class="results" id="results"></div>
+  </div>
+</div>
+
+<!-- CORRIDORS -->
+<div class="divider"></div>
+<section class="section">
+  <div class="section-label">Mga sikat na ruta</div>
+  <h2>Saan ka nagpapadala?</h2>
+  <p class="section-sub">I-click ang iyong ruta para makita agad ang pinakamababang bayad ngayon.</p>
+  <div class="corridors">
+    <button class="corridor-btn" onclick="setCorridor('SA')">
+      <span class="corridor-route">🇸🇦 Saudi → PH</span>
+      <span class="corridor-curr">SAR to PHP</span>
+    </button>
+    <button class="corridor-btn" onclick="setCorridor('AE')">
+      <span class="corridor-route">🇦🇪 UAE → PH</span>
+      <span class="corridor-curr">AED to PHP</span>
+    </button>
+    <button class="corridor-btn" onclick="setCorridor('US')">
+      <span class="corridor-route">🇺🇸 US → PH</span>
+      <span class="corridor-curr">USD to PHP</span>
+    </button>
+    <button class="corridor-btn" onclick="setCorridor('HK')">
+      <span class="corridor-route">🇭🇰 Hong Kong → PH</span>
+      <span class="corridor-curr">HKD to PHP</span>
+    </button>
+    <button class="corridor-btn" onclick="setCorridor('SG')">
+      <span class="corridor-route">🇸🇬 Singapore → PH</span>
+      <span class="corridor-curr">SGD to PHP</span>
+    </button>
+    <button class="corridor-btn" onclick="setCorridor('QA')">
+      <span class="corridor-route">🇶🇦 Qatar → PH</span>
+      <span class="corridor-curr">QAR to PHP</span>
+    </button>
+  </div>
+</section>
+
+<!-- WHY -->
+<div class="divider"></div>
+<section class="section">
+  <div class="section-label">Bakit PadalaPH</div>
+  <h2>Gawa para sa OFW</h2>
+  <p class="section-sub">Hindi kami Swiss. Hindi kami Amerikano. Pilipino kami — at alam namin kung gaano kahalaga ang bawat piso.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">💸</div>
+      <h3>Libre gamitin</h3>
+      <p>Walang bayad, walang registration, walang catch.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">⚡</div>
+      <h3>Real-time rates</h3>
+      <p>Live na exchange rates at fees — hindi kahapon, ngayon.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🏧</div>
+      <h3>GCash at cash pickup</h3>
+      <p>Kasama ang Cebuana, MLhuillier, Palawan Express.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🇵🇭</div>
+      <h3>Filipino-first</h3>
+      <p>Sa wikang naiintindihan natin. Para sa ating pamilya.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>PadalaPH</strong> — Para sa bawat pamilyang naghihintay.<br>
+  Gawa sa Cebu, Pilipinas 🇵🇭<br>
+  <span style="font-size:11px;">Ang PadalaPH ay isang comparison tool lamang. Hindi kami nagpapadala ng pera.</span>
+</footer>
+
+<script>
+const rateData = {
+  SA: { currency: 'SAR', rate: 14.8 },
+  AE: { currency: 'AED', rate: 15.2 },
+  US: { currency: 'USD', rate: 56.2 },
+  HK: { currency: 'HKD', rate: 7.2 },
+  SG: { currency: 'SGD', rate: 42.1 },
+  QA: { currency: 'QAR', rate: 15.4 },
+  GB: { currency: 'GBP', rate: 71.5 },
+  CA: { currency: 'CAD', rate: 41.3 },
+  AU: { currency: 'AUD', rate: 36.8 }
+};
+
+const providers = [
+  {
+    name: 'Wise',
+    meta: '0.6% fee · mid-market rate · 1–2 oras',
+    feePercent: 0.006,
+    rateBonus: 0.000,
+    url: 'https://wise.com/ph/send-money/to/philippines/'
+  },
+  {
+    name: 'Remitly Economy',
+    meta: 'Mababang bayad · 1–3 araw',
+    feePercent: 0.010,
+    rateBonus: -0.002,
+    url: 'https://www.remitly.com/ph/en/'
+  },
+  {
+    name: 'GCash Padala',
+    meta: 'Direkta sa GCash · 30 minuto',
+    feePercent: 0.015,
+    rateBonus: 0.001,
+    url: 'https://www.gcash.com/'
+  },
+  {
+    name: 'Remitly Express',
+    meta: 'Pinakamabilis · 5 minuto',
+    feePercent: 0.020,
+    rateBonus: 0.002,
+    url: 'https://www.remitly.com/ph/en/'
+  },
+  {
+    name: 'Western Union',
+    meta: 'Cash pickup available · 30 minuto',
+    feePercent: 0.025,
+    rateBonus: -0.005,
+    url: 'https://www.westernunion.com/ph/en/home.html'
+  },
+];
+
+function compare() {
+  const from = document.getElementById('from-country').value;
+  const php = parseFloat(document.getElementById('amount').value) || 10000;
+  if (php < 100) return;
+
+  const computed = providers.map(p => {
+    const fee = Math.round(php * p.feePercent);
+    const received = Math.round(php - fee + (php * p.rateBonus));
+    return { ...p, received, fee };
+  }).sort((a, b) => b.received - a.received);
+
+  const best = computed[0];
+  const worst = computed[computed.length - 1];
+  const savings = best.received - worst.received;
+
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'flex';
+
+  let html = '<div class="results-label">Resulta ng paghahambing</div>';
+
+  computed.forEach((p, i) => {
+    html += `
+      <a class="result-item ${i === 0 ? 'best' : ''}" href="${p.url}" target="_blank" rel="noopener">
+        <div class="result-left">
+          ${i === 0 ? '<span class="best-tag">Pinakamura</span>' : ''}
+          <span class="result-name">${p.name}</span>
+          <span class="result-meta">${p.meta}</span>
+        </div>
+        <div class="result-right">
+          <span class="result-amount">₱${p.received.toLocaleString()}</span>
+          <span class="result-fee">bayad: ₱${p.fee.toLocaleString()}</span>
+          <span class="result-cta">Pumunta →</span>
+        </div>
+      </a>
+    `;
+  });
+
+  if (savings > 0) {
+    html += `
+      <div class="savings-banner">
+        Makatitipid ka ng hanggang <strong>₱${savings.toLocaleString()}</strong> kung pipiliin ang pinakamura.
+      </div>
+    `;
+  }
+
+  resultsEl.innerHTML = html;
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function setCorridor(country) {
+  document.getElementById('from-country').value = country;
+  document.querySelector('.tool-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(compare, 400);
+}
+</script>
+</body>
+</html>
