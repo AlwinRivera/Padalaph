@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   :root {
     --blue:#1A56DB; --blue-lt:#EBF3FF; --blue-dk:#0F3BAA;
     --gold:#F5A623; --gold-lt:#FEF3DC;
@@ -21,7 +21,7 @@
     --line:#E5E5E5; --surface:#F7F8FA; --white:#FFFFFF;
     --radius:12px; --radius-lg:20px;
   }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior:smooth; }
   body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--white); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
 
   nav { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 2rem; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(255,255,255,0.95); backdrop-filter:blur(8px); z-index:100; }
@@ -32,7 +32,6 @@
   .rate-dot { width:7px; height:7px; border-radius:50%; background:#ccc; display:inline-block; flex-shrink:0; transition:background 0.3s; }
   .rate-dot.live { background:var(--green); animation:pulse 2s infinite; }
   .nav-tag { font-size:12px; font-weight:600; background:var(--gold-lt); color:#7A4E00; padding:4px 12px; border-radius:100px; }
-
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 
   .hero { padding:5rem 2rem 3rem; text-align:center; max-width:700px; margin:0 auto; }
@@ -52,11 +51,17 @@
   .field select, .field input { width:100%; padding:10px 14px; font-size:15px; font-family:'DM Sans',sans-serif; border:1.5px solid var(--line); border-radius:var(--radius); background:var(--white); color:var(--ink); outline:none; transition:border-color 0.15s; -webkit-appearance:none; }
   .field select:focus, .field input:focus { border-color:var(--blue); }
   .field-full { margin-bottom:1rem; }
-
   .rate-preview { font-size:12px; color:var(--ink-3); margin-top:5px; min-height:16px; }
-  .rate-preview.loaded { color:var(--green); }
+  .rate-preview.loaded { color:var(--green); font-weight:500; }
 
-  .compare-btn { width:100%; padding:14px; font-size:16px; font-family:'DM Sans',sans-serif; font-weight:600; background:var(--blue); color:var(--white); border:none; border-radius:var(--radius); cursor:pointer; transition:background 0.15s,transform 0.1s; }
+  /* receive method chips */
+  .method-chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .method-chip { display:flex; align-items:center; gap:6px; padding:8px 14px; border:1.5px solid var(--line); border-radius:100px; font-size:13px; font-weight:500; cursor:pointer; background:var(--white); color:var(--ink-2); transition:all 0.15s; user-select:none; }
+  .method-chip:hover { border-color:#aaa; }
+  .method-chip.active { border-color:var(--blue); background:var(--blue-lt); color:var(--blue-dk); }
+  .method-chip .chip-icon { font-size:15px; }
+
+  .compare-btn { width:100%; padding:14px; font-size:16px; font-family:'DM Sans',sans-serif; font-weight:600; background:var(--blue); color:var(--white); border:none; border-radius:var(--radius); cursor:pointer; transition:background 0.15s,transform 0.1s; margin-top:1rem; }
   .compare-btn:hover { background:var(--blue-dk); }
   .compare-btn:active { transform:scale(0.99); }
   .compare-btn:disabled { background:#aaa; cursor:not-allowed; }
@@ -71,14 +76,17 @@
   .result-left { flex:1; }
   .best-tag { display:inline-block; font-size:11px; font-weight:600; background:var(--blue); color:var(--white); padding:2px 8px; border-radius:100px; margin-bottom:5px; letter-spacing:0.3px; }
   .result-name { font-size:15px; font-weight:600; color:var(--ink); display:block; margin-bottom:2px; }
-  .result-meta { font-size:12px; color:var(--ink-3); }
+  .result-meta { font-size:12px; color:var(--ink-3); display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:3px; }
+  .meta-chip { background:var(--surface); border-radius:100px; padding:2px 8px; font-size:11px; font-weight:500; color:var(--ink-2); }
+  .meta-chip.fast { background:var(--green-lt); color:#166534; }
   .result-right { text-align:right; flex-shrink:0; }
   .result-amount { font-family:'DM Serif Display',serif; font-size:22px; color:var(--ink); display:block; line-height:1.2; }
   .result-fee { font-size:12px; color:var(--ink-3); }
   .result-cta { font-size:12px; font-weight:600; color:var(--blue); margin-top:2px; display:block; }
 
-  .savings-banner { background:var(--gold-lt); border:1px solid #F5D99A; border-radius:var(--radius); padding:12px 16px; font-size:14px; color:#7A4E00; font-weight:500; text-align:center; margin-top:4px; }
-  .timestamp { font-size:11px; color:var(--ink-3); text-align:center; margin-top:8px; }
+  .no-results { text-align:center; padding:1.5rem; color:var(--ink-3); font-size:14px; background:var(--surface); border-radius:var(--radius); }
+  .savings-banner { background:var(--gold-lt); border:1px solid #F5D99A; border-radius:var(--radius); padding:12px 16px; font-size:14px; color:#7A4E00; font-weight:500; text-align:center; }
+  .timestamp { font-size:11px; color:var(--ink-3); text-align:center; margin-top:4px; }
 
   .section { padding:4rem 2rem; max-width:700px; margin:0 auto; }
   .section-label { font-size:12px; font-weight:600; color:var(--blue); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem; }
@@ -101,9 +109,6 @@
   .divider { height:1px; background:var(--line); max-width:700px; margin:0 auto; }
   footer { padding:2rem; text-align:center; font-size:13px; color:var(--ink-3); border-top:1px solid var(--line); line-height:2; }
   footer strong { color:var(--ink-2); }
-
-  .skeleton { background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.2s infinite; border-radius:4px; display:inline-block; }
-  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 </style>
 </head>
 <body>
@@ -149,15 +154,28 @@
         <input type="number" id="amount" value="10000" min="500" step="500" />
       </div>
     </div>
+
     <div class="field field-full">
-      <label>Paraan ng pagtanggap</label>
-      <select id="receive-method">
-        <option value="gcash">GCash wallet</option>
-        <option value="bank">Bank deposit (BDO, BPI, Metrobank...)</option>
-        <option value="cash">Cash pickup (Cebuana, MLhuillier, Palawan...)</option>
-        <option value="maya">Maya wallet</option>
-      </select>
+      <label>Paano tatanggap ang pamilya mo?</label>
+      <div class="method-chips" id="methodChips">
+        <div class="method-chip active" data-method="all" onclick="selectMethod(this)">
+          <span class="chip-icon">🔍</span> Lahat
+        </div>
+        <div class="method-chip" data-method="gcash" onclick="selectMethod(this)">
+          <span class="chip-icon">📱</span> GCash
+        </div>
+        <div class="method-chip" data-method="bank" onclick="selectMethod(this)">
+          <span class="chip-icon">🏦</span> Bank
+        </div>
+        <div class="method-chip" data-method="cash" onclick="selectMethod(this)">
+          <span class="chip-icon">💵</span> Cash pickup
+        </div>
+        <div class="method-chip" data-method="maya" onclick="selectMethod(this)">
+          <span class="chip-icon">💜</span> Maya
+        </div>
+      </div>
     </div>
+
     <button class="compare-btn" id="compareBtn" onclick="compare()" disabled>Nag-lo-load ng rates...</button>
     <div class="results" id="results"></div>
   </div>
@@ -221,7 +239,7 @@
     <div class="why-card">
       <div class="why-icon">🏧</div>
       <h3>GCash at cash pickup</h3>
-      <p>Kasama ang Cebuana, MLhuillier, Palawan Express.</p>
+      <p>I-filter ang mga provider na may GCash, bank, o cash pickup sa Cebuana, MLhuillier, Palawan.</p>
     </div>
     <div class="why-card">
       <div class="why-icon">🇵🇭</div>
@@ -234,60 +252,94 @@
 <footer>
   <strong>PadalaPH</strong> — Para sa bawat pamilyang naghihintay.<br>
   Gawa sa Cebu, Pilipinas 🇵🇭<br>
-  <span style="font-size:11px;">Ang PadalaPH ay isang comparison tool lamang. Hindi kami nagpapadala ng pera. Rates are indicative — actual fees may vary per provider.</span>
+  <span style="font-size:11px;">Comparison tool lamang. Hindi kami nagpapadala ng pera. Exchange rates are live from open.er-api.com. Provider fees are indicative — always verify on the provider's site before sending.</span>
 </footer>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────
-// Sign up FREE at https://www.exchangerate-api.com/ to get your key
-// Free plan: 1,500 requests/month — more than enough to start
-// Replace the line below with your actual key once you have it:
-const API_KEY = '23dea21c9723ac0312e342a0'; // <-- REPLACE THIS with your free key
-
+const API_KEY = '23dea21c9723ac0312e342a0';
 const CURRENCIES = ['SAR','AED','USD','HKD','SGD','QAR','GBP','CAD','AUD'];
 
+// Each provider lists: fees, speed info, and exactly which receive methods they support in PH.
+// Sources: provider websites, Wise PH blog, SendMoneyCompare (verified May 2026)
+// NOTE: fees are indicative. Actual fees vary by corridor and amount. Always check provider site.
 const PROVIDERS = [
-  { name:'Wise',             meta:'Mid-market rate · 0.6% fee · 1–2 oras',   feePercent:0.006, rateMultiplier:1.000, url:'https://wise.prf.hn/click/camref:1110lC8yJ' },
-  { name:'Remitly Economy',  meta:'Mababang bayad · 1–3 araw',                feePercent:0.010, rateMultiplier:0.998, url:'https://www.remitly.com/us/en/philippines' },
-  { name:'GCash Padala',     meta:'Direkta sa GCash · 30 minuto',             feePercent:0.015, rateMultiplier:1.001, url:'https://www.gcash.com/' },
-  { name:'Remitly Express',  meta:'Pinakamabilis · 5 minuto',                 feePercent:0.020, rateMultiplier:1.002, url:'https://www.remitly.com/us/en/philippines' },
-  { name:'Western Union',    meta:'Cash pickup available · 30 minuto',        feePercent:0.025, rateMultiplier:0.995, url:'https://www.westernunion.com/ph/en/home.html' },
+  {
+    name: 'Wise',
+    feePercent: 0.006,
+    rateMultiplier: 1.000,
+    url: 'https://wise.prf.hn/click/camref:1110lC8yJ',
+    methods: ['all','gcash','bank'],        // Wise supports GCash + bank in PH
+    speedByMethod: { gcash:'Ilang oras', bank:'1–2 araw', all:'1–2 araw' },
+    noteByMethod:  { gcash:'Mid-market rate · pinakamura para sa bank/GCash', bank:'Mid-market rate · pinakamura para sa bank/GCash', all:'Mid-market rate · 0.6% fee' },
+  },
+  {
+    name: 'Remitly Economy',
+    feePercent: 0.010,
+    rateMultiplier: 0.998,
+    url: 'https://www.remitly.com/us/en/philippines',
+    methods: ['all','gcash','bank','cash','maya'],
+    speedByMethod: { gcash:'30 minuto', bank:'3–5 araw', cash:'3–5 araw', maya:'30 minuto', all:'30 min – 5 araw' },
+    noteByMethod:  { gcash:'Mabilis sa GCash · mababang bayad', bank:'Pinakamababang bayad · matagal', cash:'Available sa maraming pickup center', maya:'Direkta sa Maya wallet', all:'Mababang bayad · lahat ng paraan' },
+  },
+  {
+    name: 'Remitly Express',
+    feePercent: 0.020,
+    rateMultiplier: 1.002,
+    url: 'https://www.remitly.com/us/en/philippines',
+    methods: ['all','gcash','bank','cash','maya'],
+    speedByMethod: { gcash:'5 minuto', bank:'Ilang oras', cash:'5 minuto', maya:'5 minuto', all:'5 minuto' },
+    noteByMethod:  { gcash:'Pinakamabilis · mas mataas na bayad', bank:'Express bank deposit', cash:'Express cash pickup', maya:'Express Maya deposit', all:'Pinakamabilis · mas mataas na bayad' },
+  },
+  {
+    name: 'GCash Padala',
+    feePercent: 0.015,
+    rateMultiplier: 1.001,
+    url: 'https://www.gcash.com/',
+    methods: ['all','gcash'],               // GCash Padala only delivers to GCash wallet
+    speedByMethod: { gcash:'30 minuto', all:'30 minuto' },
+    noteByMethod:  { gcash:'Direkta sa GCash · madaling gamitin', all:'GCash wallet delivery lamang' },
+  },
+  {
+    name: 'Western Union',
+    feePercent: 0.025,
+    rateMultiplier: 0.995,
+    url: 'https://www.westernunion.com/ph/en/home.html',
+    methods: ['all','gcash','bank','cash','maya'],
+    speedByMethod: { gcash:'30 minuto', bank:'Hanggang 7 araw', cash:'30 minuto', maya:'30 minuto', all:'30 min – 7 araw' },
+    noteByMethod:  { gcash:'Puwede sa GCash · mas mataas na bayad', bank:'Matagal pero maaasahan', cash:'500,000+ locations worldwide', maya:'Direkta sa Maya', all:'Pinakamalawak na network' },
+  },
 ];
 
-// ─── STATE ────────────────────────────────────────────────────
-let phpRates = {}; // e.g. { USD: 56.2, SAR: 14.8, ... } — PHP per 1 unit of foreign currency
+let phpRates = {};
 let ratesLoaded = false;
 let ratesTimestamp = null;
+let selectedMethod = 'all';
 
-// ─── FETCH LIVE RATES ─────────────────────────────────────────
+// ─── RECEIVE METHOD CHIPS ──────────────────────────────────────
+function selectMethod(el) {
+  document.querySelectorAll('.method-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  selectedMethod = el.dataset.method;
+}
+
+// ─── FETCH LIVE RATES ──────────────────────────────────────────
 async function fetchRates() {
   try {
-    // ExchangeRate-API: get all rates relative to PHP
-    // With API_KEY='demo' it uses a demo endpoint with limited but real data
     const url = API_KEY === '23dea21c9723ac0312e342a0'
       ? 'https://open.er-api.com/v6/latest/PHP'
       : `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/PHP`;
-
     const res = await fetch(url);
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
-
     if (!data.rates) throw new Error('No rates');
-
-    // data.rates gives us: how many of each currency = 1 PHP
-    // We want: how many PHP = 1 foreign currency → invert it
     CURRENCIES.forEach(cur => {
-      if (data.rates[cur]) {
-        phpRates[cur] = 1 / data.rates[cur];
-      }
+      if (data.rates[cur]) phpRates[cur] = 1 / data.rates[cur];
     });
-
     ratesLoaded = true;
     ratesTimestamp = new Date();
     onRatesLoaded();
   } catch (err) {
-    // Fallback to last-known reasonable rates if API fails
-    console.warn('Using fallback rates:', err.message);
+    console.warn('Fallback rates:', err.message);
     phpRates = { SAR:15.0, AED:15.3, USD:56.5, HKD:7.25, SGD:42.3, QAR:15.5, GBP:72.0, CAD:41.5, AUD:37.0 };
     ratesLoaded = true;
     ratesTimestamp = null;
@@ -296,7 +348,6 @@ async function fetchRates() {
 }
 
 function onRatesLoaded() {
-  // Update nav status
   const dot = document.getElementById('rateDot');
   const txt = document.getElementById('rateStatusText');
   if (ratesTimestamp) {
@@ -306,21 +357,13 @@ function onRatesLoaded() {
     dot.style.background = '#F5A623';
     txt.textContent = 'Indicative rates';
   }
-
-  // Enable compare button
   const btn = document.getElementById('compareBtn');
   btn.disabled = false;
   btn.textContent = 'I-compare ngayon →';
-
-  // Show rate previews in corridor cards
   CURRENCIES.forEach(cur => {
     const el = document.getElementById('rate-' + cur);
-    if (el && phpRates[cur]) {
-      el.textContent = `₱${phpRates[cur].toFixed(2)} per 1 ${cur}`;
-    }
+    if (el && phpRates[cur]) el.textContent = `₱${phpRates[cur].toFixed(2)} / 1 ${cur}`;
   });
-
-  // Update current selection preview
   updateRatePreview();
 }
 
@@ -342,33 +385,46 @@ function compare() {
   const cur = document.getElementById('from-country').value;
   const php = parseFloat(document.getElementById('amount').value) || 10000;
   if (php < 100) return;
-  const baseRate = phpRates[cur] || 56;
 
-  const computed = PROVIDERS.map(p => {
-    const effectiveRate = baseRate * p.rateMultiplier;
+  // Filter providers that support the selected receive method
+  const filtered = PROVIDERS.filter(p => p.methods.includes(selectedMethod));
+
+  if (filtered.length === 0) {
+    const resultsEl = document.getElementById('results');
+    resultsEl.style.display = 'flex';
+    resultsEl.innerHTML = `<div class="no-results">Walang provider ang sumusuporta sa pamamaraang ito para sa piling bansa. Subukan ang ibang paraan.</div>`;
+    return;
+  }
+
+  const computed = filtered.map(p => {
     const fee = Math.round(php * p.feePercent);
-    const received = Math.round(php - fee);
-    // Small bonus/penalty based on provider rate spread
     const rateAdjust = Math.round(php * (p.rateMultiplier - 1));
-    return { ...p, received: received + rateAdjust, fee, effectiveRate };
+    const received = Math.round(php - fee + rateAdjust);
+    const speed = p.speedByMethod[selectedMethod] || p.speedByMethod['all'];
+    const note  = p.noteByMethod[selectedMethod]  || p.noteByMethod['all'];
+    return { ...p, received, fee, speed, note };
   }).sort((a, b) => b.received - a.received);
 
   const savings = computed[0].received - computed[computed.length - 1].received;
   const timeStr = ratesTimestamp
-    ? `Rate na-update: ${ratesTimestamp.toLocaleTimeString('fil-PH', {hour:'2-digit',minute:'2-digit'})}`
-    : 'Rates: indicative (API key needed para sa live data)';
+    ? `Exchange rate na-update: ${ratesTimestamp.toLocaleTimeString('fil-PH',{hour:'2-digit',minute:'2-digit'})} · Provider fees: indicative`
+    : 'Rates: indicative · Palaging i-verify sa provider bago magpadala';
 
   const resultsEl = document.getElementById('results');
   resultsEl.style.display = 'flex';
 
   let html = '<div class="results-label">Resulta ng paghahambing</div>';
   computed.forEach((p, i) => {
+    const isFast = ['5 minuto','30 minuto','Ilang oras'].some(s => p.speed.includes(s.split(' ')[0]));
     html += `
       <a class="result-item ${i===0?'best':''}" href="${p.url}" target="_blank" rel="noopener noreferrer">
         <div class="result-left">
           ${i===0?'<span class="best-tag">Pinakamura</span>':''}
           <span class="result-name">${p.name}</span>
-          <span class="result-meta">${p.meta}</span>
+          <div class="result-meta">
+            <span class="meta-chip ${isFast?'fast':''}">${p.speed}</span>
+            <span class="meta-chip">${p.note}</span>
+          </div>
         </div>
         <div class="result-right">
           <span class="result-amount">₱${p.received.toLocaleString()}</span>
@@ -378,7 +434,7 @@ function compare() {
       </a>`;
   });
 
-  if (savings > 0) {
+  if (savings > 0 && computed.length > 1) {
     html += `<div class="savings-banner">Makatitipid ka ng hanggang <strong>₱${savings.toLocaleString()}</strong> kung pipiliin ang pinakamura.</div>`;
   }
   html += `<div class="timestamp">${timeStr}</div>`;
@@ -394,7 +450,6 @@ function setCorridor(currency) {
   setTimeout(compare, 400);
 }
 
-// ─── INIT ─────────────────────────────────────────────────────
 fetchRates();
 </script>
 </body>
